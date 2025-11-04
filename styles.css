@@ -6,8 +6,8 @@
 }
 
 :root {
-    --bg-gradient-start: #0a0e27;
-    --bg-gradient-end: #1a0f2e;
+    --bg-gradient-start: #05060a;
+    --bg-gradient-end: #000000;
     --text-primary: #ffffff;
     --text-secondary: #e0e0e0;
     --accent-blue: #4a90e2;
@@ -15,6 +15,7 @@
     --beige-bg: #F5F5DC;
     --glass-bg: rgba(255, 255, 255, 0.1);
     --glass-border: rgba(255, 255, 255, 0.2);
+    --capsule-height: 36px;
 }
 
 body {
@@ -48,7 +49,8 @@ body {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 10px 20px;
+    padding: 0 16px;
+    min-height: var(--capsule-height);
     border-radius: 40px;
     z-index: 1000;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -63,11 +65,9 @@ body {
 }
 
 .site-name {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-primary);
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.2rem;
 }
 
 .nav-divider {
@@ -83,12 +83,43 @@ body {
     font-size: 0.7rem;
     color: var(--text-primary);
     font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 0.4s ease, opacity 0.4s ease, margin 0.4s ease;
+}
+
+/* Collapsed state after 3s; expands on hover */
+.nav-brand.collapsed .available-badge {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.nav-brand:hover .available-badge {
+    max-width: 200px;
+    opacity: 1;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .nav-center {
     display: flex;
     align-items: center;
     gap: 10px;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 0 12px;
+    min-height: var(--capsule-height);
+    border-radius: 40px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .nav-actions {
@@ -119,8 +150,9 @@ body {
 }
 
 .get-in-touch-button {
-    padding: 8px 20px;
-    background-color: rgb(48, 62, 72);
+    padding: 0 20px;
+    min-height: var(--capsule-height);
+    background-color: #000000;
     color: white;
     border-radius: 40px;
     text-decoration: none;
@@ -136,7 +168,7 @@ body {
 }
 
 .get-in-touch-button:hover {
-    background-color: rgba(48, 62, 72, 0.8);
+    background-color: #0a0a0a;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -162,7 +194,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, #1a0f2e 50%, var(--bg-gradient-end) 100%);
+    background: linear-gradient(180deg, var(--bg-gradient-end) 0%, var(--bg-gradient-start) 100%);
     z-index: -2;
 }
 
@@ -173,8 +205,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+    background:
+        radial-gradient(600px circle at 18% 12%, rgba(33, 121, 255, 0.35) 0%, rgba(0,0,0,0) 60%),
+        radial-gradient(650px circle at 82% 15%, rgba(180, 30, 200, 0.35) 0%, rgba(0,0,0,0) 62%);
     animation: pulse 8s ease-in-out infinite;
 }
 
@@ -252,7 +285,7 @@ body {
 .name-mahir {
     display: block;
     color: var(--text-primary);
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Grand Hotel', cursive;
 }
 
 .name-ahmed {
@@ -261,8 +294,9 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-family: 'Dancing Script', cursive;
-    animation: gradient-shift 3s ease-in-out infinite;
+    font-family: 'Grand Hotel', cursive;
+    background-size: 200% 200%;
+    animation: gradient-shift 6s ease-in-out infinite;
 }
 
 @keyframes gradient-shift {

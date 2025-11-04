@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.querySelector('.navbar');
     const navContainer = document.querySelector('.nav-container');
     const navActions = document.querySelector('.nav-actions');
+    const navBrand = document.querySelector('.nav-brand');
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
@@ -77,6 +78,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         lastScroll = currentScroll;
     });
+
+    // ===== COLLAPSE "AVAILABLE FOR WORK" AFTER 3s, EXPAND ON HOVER =====
+    if (navBrand) {
+        setTimeout(() => {
+            navBrand.classList.add('collapsed');
+        }, 3000);
+
+        // Optional: keep collapsed when hover ends (handled by CSS). No JS needed.
+    }
 
     // ===== SMOOTH NAVIGATION LINKS =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
