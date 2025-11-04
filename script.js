@@ -47,20 +47,33 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastScroll = 0;
     const navbar = document.querySelector('.navbar');
     const navContainer = document.querySelector('.nav-container');
+    const navCenter = document.querySelector('.nav-center');
     const navActions = document.querySelector('.nav-actions');
     const navBrand = document.querySelector('.nav-brand');
 
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
+        const heroSectionEl = document.querySelector('.hero-section');
+        const detailsSectionEl = document.querySelector('.details-section');
+        const heroHeight = heroSectionEl ? heroSectionEl.offsetHeight : 600;
+
+        // Add darker glass effect when scrolled to about/details section
+        if (detailsSectionEl && currentScroll > heroHeight * 0.7) {
+            navContainer.classList.add('scrolled');
+            if (navCenter) navCenter.classList.add('scrolled');
+            if (navActions) navActions.classList.add('scrolled');
+        } else {
+            navContainer.classList.remove('scrolled');
+            if (navCenter) navCenter.classList.remove('scrolled');
+            if (navActions) navActions.classList.remove('scrolled');
+        }
 
         if (currentScroll > 100) {
-            navContainer.style.background = 'rgba(255, 255, 255, 0.15)';
             navContainer.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)';
             if (navActions) {
                 navActions.style.opacity = '0.95';
             }
         } else {
-            navContainer.style.background = 'rgba(255, 255, 255, 0.1)';
             navContainer.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
             if (navActions) {
                 navActions.style.opacity = '1';
