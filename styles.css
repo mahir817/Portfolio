@@ -212,7 +212,7 @@ body {
     width: 100%;
     height: 100%;
     background:
-        radial-gradient(600px circle at 18% 12%, rgba(33, 121, 255, 0.35) 0%, rgba(0,0,0,0) 60%),
+        radial-gradient(600px circle at 50% 10%, rgba(33, 121, 255, 0.35) 0%, rgba(0,0,0,0) 60%),
         radial-gradient(650px circle at 82% 15%, rgba(180, 30, 200, 0.35) 0%, rgba(0,0,0,0) 62%);
     animation: pulse 8s ease-in-out infinite;
 }
@@ -282,8 +282,8 @@ body {
 /* Hero Name - Bottom Left, single-line */
 .hero-name {
     position: absolute;
-    bottom: 40px;
-    left: 80px;
+    bottom: 20px;
+    left: 20px;
     font-size: clamp(3rem, 11vw, 8rem);
     font-weight: 700;
     line-height: 1;
@@ -292,6 +292,7 @@ body {
     display: flex;
     gap: 0;
     white-space: nowrap;
+    z-index: 1;
 }
 
 .name-mahir {
@@ -324,7 +325,7 @@ body {
 .hero-description {
     position: absolute;
     right: 80px;
-    top: 50%;
+    top: 20%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
