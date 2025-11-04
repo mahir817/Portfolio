@@ -104,6 +104,11 @@ body {
     padding-right: 12px;
 }
 
+/* Hide divider when collapsed so it shows as just "Mahir" */
+.nav-brand.collapsed .nav-divider {
+    display: none;
+}
+
 .nav-center {
     display: flex;
     align-items: center;
@@ -120,6 +125,7 @@ body {
     border-radius: 40px;
     border: 1px solid var(--glass-border);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
 }
 
 .nav-actions {
@@ -273,30 +279,36 @@ body {
     align-items: end;
 }
 
-/* Hero Name - Bottom Left */
+/* Hero Name - Bottom Left, single-line */
 .hero-name {
-    font-size: clamp(4rem, 12vw, 10rem);
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+    font-size: clamp(3rem, 11vw, 8rem);
     font-weight: 700;
-    line-height: 0.9;
+    line-height: 1;
     margin: 0;
     animation: fadeInUp 1s ease-out;
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
 }
 
 .name-mahir {
-    display: block;
+    display: inline-block;
     color: var(--text-primary);
     font-family: 'Grand Hotel', cursive;
 }
 
 .name-ahmed {
-    display: block;
+    display: inline-block;
     background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-family: 'Grand Hotel', cursive;
     background-size: 200% 200%;
-    animation: gradient-shift 6s ease-in-out infinite;
+    animation: gradient-shift 5s ease-in-out infinite;
 }
 
 @keyframes gradient-shift {
@@ -308,8 +320,12 @@ body {
     }
 }
 
-/* Hero Description - Middle Right */
+/* Hero Description - Center Right */
 .hero-description {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     justify-content: flex-end;
