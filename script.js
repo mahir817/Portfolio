@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     // Trigger typing animation for about overview when visible
                     const typingEl = document.getElementById('aboutTyping');
-                    if (typingEl && !typingEl.dataset.started) {
+if (typingEl && !typingEl.dataset.started) {
                         const text = typingEl.getAttribute('data-text') || '';
                         typingEl.dataset.started = 'true';
-                        // faster typing
-                        typeWriter(typingEl, text, 14);
+    // 3x faster typing
+    typeWriter(typingEl, text, 5);
                     }
                     cardObserver.unobserve(entry.target);
                 }
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===== TYPEWRITER EFFECT (Enhanced) =====
-function typeWriter(element, text, baseSpeed = 20, initialDelay = 200, endPause = 800) {
+function typeWriter(element, text, baseSpeed = 7, initialDelay = 150, endPause = 600) {
         let index = 0;
         element.textContent = '';
 
@@ -338,9 +338,9 @@ function typeWriter(element, text, baseSpeed = 20, initialDelay = 200, endPause 
         if (index <= text.length) {
                 element.textContent = text.slice(0, index);
                 const prevChar = text.charAt(index - 1);
-            let delay = baseSpeed + Math.random() * 40; // tighter variance (faster)
-            if (/[,.;:!?]/.test(prevChar)) delay += 180; // shorter punctuation pause
-            if (prevChar === ' ') delay -= 12; // slightly faster over spaces
+            let delay = baseSpeed + Math.random() * 18; // much faster
+            if (/[,.;:!?]/.test(prevChar)) delay += 60; // quick punctuation pause
+            if (prevChar === ' ') delay -= 8; // faster over spaces
                 index++;
                 setTimeout(nextTick, Math.max(15, delay));
             } else {
@@ -508,3 +508,32 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+    // ===== STATS RIBBON COUNT-UP =====
+    const statValues = document.querySelectorAll('.stat-value[data-target]');
+    if (statValues.length) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    statValues.forEach(el => {
+                        if (el.dataset.counted) return;
+                        el.dataset.counted = 'true';
+                        const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+                        const duration = 900; // ms
+                        const start = performance.now();
+                        function tick(now) {
+                            const progress = Math.min((now - start) / duration, 1);
+                            const value = Math.floor(progress * target);
+                            el.textContent = value.toString();
+                            if (progress < 1) requestAnimationFrame(tick);
+                        }
+                        requestAnimationFrame(tick);
+                    });
+                    statsObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const ribbon = document.querySelector('.stats-ribbon-inner');
+        if (ribbon) statsObserver.observe(ribbon);
+    }
