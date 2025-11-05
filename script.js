@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Observe all sections that need animation
     const animatedElements = document.querySelectorAll(
-        '.section-header, .about-content, .about-cards-grid, .skills-grid, .projects-grid, .contact-content'
+        '.section-header, .about-content, .about-glass-container, .bento-grid, .skills-grid, .projects-grid, .contact-content'
     );
     
     animatedElements.forEach(element => {
@@ -26,27 +26,40 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Staggered animation for about cards
-    const aboutCardsGrid = document.querySelector('.about-cards-grid');
-    if (aboutCardsGrid) {
+    const aboutGlassContainer = document.querySelector('.about-glass-container');
+    const bentoGrid = document.querySelector('.bento-grid');
+    
+    if (aboutGlassContainer) {
+        observer.observe(aboutGlassContainer);
+    }
+    
+    if (bentoGrid) {
         const cardObserver = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const cards = entry.target.querySelectorAll('.apple-glass-card');
+                    const cards = entry.target.querySelectorAll('.bento-card');
                     cards.forEach((card, index) => {
                         setTimeout(() => {
                             card.style.opacity = '1';
                             card.style.transform = 'translateY(0)';
                         }, index * 100);
                     });
+                    // Trigger typing animation for about overview when visible
+                    const typingEl = document.getElementById('aboutTyping');
+                    if (typingEl && !typingEl.dataset.started) {
+                        const text = typingEl.getAttribute('data-text') || '';
+                        typingEl.dataset.started = 'true';
+                        typeWriter(typingEl, text, 25);
+                    }
                     cardObserver.unobserve(entry.target);
                 }
             });
         }, observerOptions);
         
-        cardObserver.observe(aboutCardsGrid);
+        cardObserver.observe(bentoGrid);
         
         // Initialize cards with opacity 0
-        const cards = aboutCardsGrid.querySelectorAll('.apple-glass-card');
+        const cards = bentoGrid.querySelectorAll('.bento-card');
         cards.forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
@@ -189,10 +202,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== APPLE GLASS CARD INTERACTIVE EFFECTS =====
-    const appleGlassCards = document.querySelectorAll('.apple-glass-card');
+    // ===== BENTO CARD INTERACTIVE EFFECTS =====
+    const bentoCards = document.querySelectorAll('.bento-card');
     
-    appleGlassCards.forEach(card => {
+    bentoCards.forEach(card => {
         card.addEventListener('mousemove', function(e) {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -201,12 +214,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
             
-            // Subtle tilt effect for Apple cards
-            const rotateX = (y - centerY) / 30;
-            const rotateY = (centerX - x) / 30;
+            // Subtle tilt effect for bento cards
+            const rotateX = (y - centerY) / 40;
+            const rotateY = (centerX - x) / 40;
             
             // Apply tilt only slightly (Apple-style subtlety)
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.01)`;
         });
         
         card.addEventListener('mouseleave', function() {
@@ -356,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Cursor hover effects
-        const interactiveElements = document.querySelectorAll('a, button, .glass-card, .apple-glass-card, .project-card');
+        const interactiveElements = document.querySelectorAll('a, button, .glass-card, .bento-card, .project-card');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'scale(1.5)';
