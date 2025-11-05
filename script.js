@@ -328,20 +328,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===== TYPING EFFECT FOR HERO NAME (OPTIONAL) =====
-    function typeWriter(element, text, speed = 100) {
-        let i = 0;
+    // ===== TYPEWRITER EFFECT (Enhanced) =====
+    function typeWriter(element, text, baseSpeed = 35, initialDelay = 300, endPause = 1000) {
+        let index = 0;
         element.textContent = '';
-        
-        function type() {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-                setTimeout(type, speed);
+
+        function nextTick() {
+            if (index <= text.length) {
+                element.textContent = text.slice(0, index);
+                const prevChar = text.charAt(index - 1);
+                let delay = baseSpeed + Math.random() * 70; // natural variance
+                if (/[,.;:!?]/.test(prevChar)) delay += 250; // pause on punctuation
+                if (prevChar === ' ') delay -= 10; // slightly faster over spaces
+                index++;
+                setTimeout(nextTick, Math.max(15, delay));
+            } else {
+                // finished typing; slight rest while cursor blinks
+                setTimeout(() => {}, endPause);
             }
         }
-        
-        type();
+
+        setTimeout(nextTick, initialDelay);
     }
 
     // ===== CURSOR TRACKER FOR INTERACTIVE ELEMENTS =====
