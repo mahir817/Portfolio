@@ -18,12 +18,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Observe all sections that need animation
     const animatedElements = document.querySelectorAll(
-        '.section-header, .about-content, .skills-grid, .projects-grid, .contact-content'
+        '.section-header, .about-content, .about-cards-grid, .skills-grid, .projects-grid, .contact-content'
     );
     
     animatedElements.forEach(element => {
         observer.observe(element);
     });
+
+    // Staggered animation for about cards
+    const aboutCardsGrid = document.querySelector('.about-cards-grid');
+    if (aboutCardsGrid) {
+        const cardObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const cards = entry.target.querySelectorAll('.apple-glass-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, index * 100);
+                    });
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        cardObserver.observe(aboutCardsGrid);
+        
+        // Initialize cards with opacity 0
+        const cards = aboutCardsGrid.querySelectorAll('.apple-glass-card');
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        });
+    }
 
     // ===== SKILL PROGRESS BARS ANIMATION =====
     const skillBars = document.querySelectorAll('.skill-progress-bar');
@@ -157,6 +186,31 @@ document.addEventListener('DOMContentLoaded', function() {
         
         card.addEventListener('mouseleave', function() {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+        });
+    });
+
+    // ===== APPLE GLASS CARD INTERACTIVE EFFECTS =====
+    const appleGlassCards = document.querySelectorAll('.apple-glass-card');
+    
+    appleGlassCards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Subtle tilt effect for Apple cards
+            const rotateX = (y - centerY) / 30;
+            const rotateY = (centerX - x) / 30;
+            
+            // Apply tilt only slightly (Apple-style subtlety)
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0) scale(1)';
         });
     });
 
@@ -302,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Cursor hover effects
-        const interactiveElements = document.querySelectorAll('a, button, .glass-card, .project-card');
+        const interactiveElements = document.querySelectorAll('a, button, .glass-card, .apple-glass-card, .project-card');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.style.transform = 'scale(1.5)';

@@ -19,7 +19,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', 'Roboto', 'Poppins', sans-serif;
     overflow-x: hidden;
     background-color: var(--bg-gradient-start);
     color: var(--text-primary);
@@ -130,7 +130,7 @@ body {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 0 6px;
+    padding: 0 4px;
     min-height: var(--capsule-height);
     border-radius: 40px;
     border: 1px solid var(--glass-border);
@@ -159,7 +159,7 @@ body {
 }
 
 .nav-link {
-    padding: 6px 12px;
+    padding: 3px 10px;
     color: var(--text-primary);
     text-decoration: none;
     font-size: 0.85rem;
@@ -259,7 +259,7 @@ body {
     height: 100%;
     background:
         radial-gradient(700px circle at 60% 0%, rgba(33, 121, 255, 0.35) 0%, rgba(0,0,0,0) 60%),
-        radial-gradient(750px circle at 100% 0%, rgba(180, 30, 200, 0.35) 0%, rgba(0,0,0,0) 62%);
+        radial-gradient(800px circle at 100% 0%, rgba(180, 30, 200, 0.35) 0%, rgba(0,0,0,0) 62%);
     animation: pulse 8s ease-in-out infinite;
 }
 
@@ -562,87 +562,322 @@ body {
     background: rgba(255, 255, 255, 0.5);
 }
 
-/* About Section */
+/* ===== APPLE-STYLE GLASSMORPHISM ABOUT SECTION ===== */
 .about-section {
     margin-bottom: 120px;
 }
 
-.about-content {
+.about-cards-grid {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 60px;
-    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
     opacity: 0;
     transform: translateY(50px);
     transition: all 1s ease;
 }
 
-.about-content.visible {
+.about-cards-grid.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-.profile-image-container {
+/* Apple Glass Card Base Styles */
+.apple-glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    padding: 32px;
     position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        0 2px 8px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.profile-image-wrapper {
-    position: relative;
-    width: 250px;
-    height: 250px;
-    margin: 0 auto;
+.apple-glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+    );
+    opacity: 0.6;
 }
 
-.profile-image-placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+.apple-glass-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.12),
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), rgba(138, 92, 246, 0.1));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
-    color: white;
+    margin-bottom: 20px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
-    z-index: 2;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
-.profile-glow {
+.card-icon::before {
+    content: '';
     position: absolute;
-    top: -20px;
-    left: -20px;
-    width: calc(100% + 40px);
-    height: calc(100% + 40px);
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-    opacity: 0.3;
-    filter: blur(20px);
-    animation: pulse-glow 3s ease-in-out infinite;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(138, 92, 246, 0.2));
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-@keyframes pulse-glow {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 0.3;
-    }
-    50% {
-        transform: scale(1.1);
-        opacity: 0.5;
-    }
+.apple-glass-card:hover .card-icon::before {
+    opacity: 1;
 }
 
-.about-text {
+.card-icon i {
+    font-size: 24px;
+    color: #4a90e2;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.apple-glass-card:hover .card-icon {
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(74, 144, 226, 0.2);
+}
+
+.apple-glass-card:hover .card-icon i {
+    transform: scale(1.1);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+.card-description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 12px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+.card-description:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Education Card Styles */
+.education-list {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
-.bio-text {
+.education-item {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.education-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.education-item:hover {
+    transform: translateX(4px);
+}
+
+.education-year {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a90e2;
+    min-width: 100px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+.education-details {
+    flex: 1;
+}
+
+.education-institution {
     font-size: 1.1rem;
-    line-height: 1.8;
-    color: #444;
-    font-weight: 300;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.education-degree {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* Experience Card Styles */
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.experience-item {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.experience-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.experience-item:hover {
+    transform: translateX(4px);
+}
+
+.experience-period {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #8b5cf6;
+    min-width: 100px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: 0.01em;
+}
+
+.experience-details {
+    flex: 1;
+}
+
+.experience-role {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.experience-company {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.experience-description {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Skills Highlight Card Styles */
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tag {
+    padding: 8px 16px;
+    background: rgba(74, 144, 226, 0.1);
+    border: 1px solid rgba(74, 144, 226, 0.2);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #4a90e2;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    letter-spacing: -0.01em;
+}
+
+.skill-tag:hover {
+    background: rgba(74, 144, 226, 0.15);
+    border-color: rgba(74, 144, 226, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+}
+
+/* Responsive Design for About Cards */
+@media (max-width: 1024px) {
+    .about-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .apple-glass-card {
+        padding: 24px;
+    }
+
+    .education-item,
+    .experience-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .education-year,
+    .experience-period {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .apple-glass-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+
+    .card-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .card-icon i {
+        font-size: 20px;
+    }
 }
 
 /* Skills Section */
