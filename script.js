@@ -49,7 +49,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (typingEl && !typingEl.dataset.started) {
                         const text = typingEl.getAttribute('data-text') || '';
                         typingEl.dataset.started = 'true';
-                        typeWriter(typingEl, text, 25);
+                        // faster typing
+                        typeWriter(typingEl, text, 14);
                     }
                     cardObserver.unobserve(entry.target);
                 }
@@ -329,17 +330,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===== TYPEWRITER EFFECT (Enhanced) =====
-    function typeWriter(element, text, baseSpeed = 35, initialDelay = 300, endPause = 1000) {
+function typeWriter(element, text, baseSpeed = 20, initialDelay = 200, endPause = 800) {
         let index = 0;
         element.textContent = '';
 
         function nextTick() {
-            if (index <= text.length) {
+        if (index <= text.length) {
                 element.textContent = text.slice(0, index);
                 const prevChar = text.charAt(index - 1);
-                let delay = baseSpeed + Math.random() * 70; // natural variance
-                if (/[,.;:!?]/.test(prevChar)) delay += 250; // pause on punctuation
-                if (prevChar === ' ') delay -= 10; // slightly faster over spaces
+            let delay = baseSpeed + Math.random() * 40; // tighter variance (faster)
+            if (/[,.;:!?]/.test(prevChar)) delay += 180; // shorter punctuation pause
+            if (prevChar === ' ') delay -= 12; // slightly faster over spaces
                 index++;
                 setTimeout(nextTick, Math.max(15, delay));
             } else {
