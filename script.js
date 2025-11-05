@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Observe all sections that need animation
     const animatedElements = document.querySelectorAll(
-        '.section-header, .about-content, .about-glass-container, .bento-grid, .skills-grid, .projects-grid, .contact-content'
+        '.section-header, .about-content, .about-glass-container, .bento-grid, .skills-grid, .skills-category-grid, .projects-grid, .contact-content'
     );
     
     animatedElements.forEach(element => {
