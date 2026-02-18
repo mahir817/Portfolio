@@ -36,6 +36,7 @@ body {
     background-color: var(--bg-gradient-start);
     color: var(--text-primary);
     line-height: 1.6;
+    position: relative;
 }
 
 /* ===== NAVIGATION BAR ===== */
@@ -654,6 +655,136 @@ body {
 .details-container {
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    /* overflow: hidden;  <-- REMOVED to allow stats ribbon to extend full width */
+}
+
+/* ===== SHOOTING STARS (Global Background) ===== */
+.shooting-stars {
+    position: absolute;
+    top: 100vh;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.6),
+        0 0 25px 8px rgba(255, 0, 128, 0.25);
+}
+
+.star::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.8));
+    transform: translateY(-50%);
+}
+
+/* Randomize 12 stars for frequency */
+.star:nth-child(1) {
+    top: 5%;
+    left: 10%;
+    animation: shoot 4s 0s infinite;
+}
+
+.star:nth-child(2) {
+    top: 15%;
+    left: 50%;
+    animation: shoot 5s 2s infinite;
+}
+
+.star:nth-child(3) {
+    top: 30%;
+    left: 80%;
+    animation: shoot 3s 1s infinite;
+}
+
+.star:nth-child(4) {
+    top: 45%;
+    left: 20%;
+    animation: shoot 6s 3s infinite;
+}
+
+.star:nth-child(5) {
+    top: 60%;
+    left: 60%;
+    animation: shoot 4s 1.5s infinite;
+}
+
+.star:nth-child(6) {
+    top: 75%;
+    left: 90%;
+    animation: shoot 5s 2.5s infinite;
+}
+
+.star:nth-child(7) {
+    top: 10%;
+    left: 30%;
+    animation: shoot 7s 0.5s infinite;
+}
+
+.star:nth-child(8) {
+    top: 25%;
+    left: 70%;
+    animation: shoot 4s 3.5s infinite;
+}
+
+.star:nth-child(9) {
+    top: 50%;
+    left: 10%;
+    animation: shoot 5s 1.2s infinite;
+}
+
+.star:nth-child(10) {
+    top: 65%;
+    left: 40%;
+    animation: shoot 6s 4s infinite;
+}
+
+.star:nth-child(11) {
+    top: 80%;
+    left: 75%;
+    animation: shoot 3.5s 2.2s infinite;
+}
+
+.star:nth-child(12) {
+    top: 90%;
+    left: 5%;
+    animation: shoot 5.5s 0.8s infinite;
+}
+
+@keyframes shoot {
+    0% {
+        transform: translate(0, 0) rotate(31deg);
+        opacity: 0;
+    }
+
+    3% {
+        opacity: 1;
+    }
+
+    20% {
+        transform: translate(350px, 210px) rotate(31deg);
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* ===== SECTION HEADERS ===== */
