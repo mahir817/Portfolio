@@ -390,7 +390,7 @@ body {
     display: flex;
     gap: 0;
     white-space: nowrap;
-    z-index: 1;
+    z-index: 3;
 }
 
 .name-mahir {
@@ -451,6 +451,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     animation: fadeInRight 1s ease-out 0.3s both;
+    z-index: 3;
 }
 
 .description-text {
@@ -465,6 +466,67 @@ body {
 .gold-emphasis {
     color: #f1c40f;
     font-weight: 600;
+}
+
+/* Portrait Cutout Styles */
+.hero-portrait {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 70vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1;
+    pointer-events: none;
+    animation: fadeInUpPortrait 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.hero-portrait img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 50px rgba(0, 240, 255, 0.12)) drop-shadow(0 0 100px rgba(139, 92, 246, 0.08));
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes fadeInUpPortrait {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 40px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Responsive adjust for portrait */
+@media (max-width: 1024px) {
+    .hero-portrait {
+        height: 65vh;
+    }
+    .hero-portrait img {
+        opacity: 0.75;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-portrait {
+        height: 55vh;
+    }
+    .hero-portrait img {
+        opacity: 0.65;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-portrait {
+        height: 45vh;
+    }
 }
 
 .scroll-indicator {
